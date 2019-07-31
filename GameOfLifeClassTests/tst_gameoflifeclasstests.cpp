@@ -19,6 +19,12 @@ private slots:
     void lieveOrDieRule_CellWithTwoOrThreeNeighborsShouldSurvive();
     void lieveOrDieRule_EmptyCellWithThreeNeighborsShouldBorn();
     void lieveOrDieRule_EmptyCellWithTwoNeighborsShouldBeEmpty();
+
+    void calculateNewGeneration_StillLifes_Block();
+    void calculateNewGeneration_StillLifes_Tub();
+    void calculateNewGeneration_Oscillators_Blinker();
+    void calculateNewGeneration_Oscillators_Beacon();
+    void calculateNewGeneration_Spaceships_Glinder();
 };
 
 
@@ -198,6 +204,163 @@ void GameOfLifeClassTests::lieveOrDieRule_EmptyCellWithTwoNeighborsShouldBeEmpty
 
     // assert
     QCOMPARE(newCellState, previousCellState);
+}
+
+void GameOfLifeClassTests::calculateNewGeneration_StillLifes_Block()
+{
+    // assign
+    const uint16_t mapSize = 4;
+    GameOfLife game(mapSize);
+    game.map()[1][1] = 1;
+    game.map()[1][2] = 1;
+    game.map()[2][1] = 1;
+    game.map()[2][2] = 1;
+
+    int resultArray[mapSize][mapSize] =
+    {
+        {0,0,0,0},
+        {0,1,1,0},
+        {0,1,1,0},
+        {0,0,0,0}
+    };
+
+    // act
+    game.calculateNewGeneration();
+
+    // assert
+    for (int i = 0; i < mapSize; ++i) {
+        for (int j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+        }
+    }
+}
+
+void GameOfLifeClassTests::calculateNewGeneration_StillLifes_Tub()
+{
+    // assign
+    const uint16_t mapSize = 5;
+    GameOfLife game(mapSize);
+    game.map()[2][1] = 1;
+    game.map()[2][3] = 1;
+    game.map()[1][2] = 1;
+    game.map()[3][2] = 1;
+
+    int resultArray[mapSize][mapSize] =
+    {
+        {0,0,0,0,0},
+        {0,0,1,0,0},
+        {0,1,0,1,0},
+        {0,0,1,0,0},
+        {0,0,0,0,0}
+    };
+
+    // act
+    game.calculateNewGeneration();
+
+    // assert
+    for (int i = 0; i < mapSize; ++i) {
+        for (int j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+        }
+    }
+}
+
+void GameOfLifeClassTests::calculateNewGeneration_Oscillators_Blinker()
+{
+    // assign
+    const uint16_t mapSize = 5;
+    GameOfLife game(mapSize);
+    game.map()[2][1] = 1;
+    game.map()[2][2] = 1;
+    game.map()[2][3] = 1;
+
+    int resultArray[mapSize][mapSize] =
+    {
+        {0,0,0,0,0},
+        {0,0,1,0,0},
+        {0,0,1,0,0},
+        {0,0,1,0,0},
+        {0,0,0,0,0}
+    };
+
+    // act
+    game.calculateNewGeneration();
+
+    // assert
+    for (int i = 0; i < mapSize; ++i) {
+        for (int j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+        }
+    }
+}
+
+void GameOfLifeClassTests::calculateNewGeneration_Oscillators_Beacon()
+{
+    // assign
+    const uint16_t mapSize = 6;
+    GameOfLife game(mapSize);
+
+    game.map()[1][4] = 1;
+    game.map()[1][3] = 1;
+    game.map()[2][4] = 1;
+    game.map()[2][3] = 1;
+
+    game.map()[3][2] = 1;
+    game.map()[3][1] = 1;
+    game.map()[4][2] = 1;
+    game.map()[4][1] = 1;
+
+    int resultArray[mapSize][mapSize] =
+    {
+        {0,0,0,0,0,0},
+        {0,0,0,1,1,0},
+        {0,0,0,0,1,0},
+        {0,1,0,0,0,0},
+        {0,1,1,0,0,0},
+        {0,0,0,0,0,0}
+    };
+
+    // act
+    game.calculateNewGeneration();
+
+    // assert
+    for (int i = 0; i < mapSize; ++i) {
+        for (int j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+        }
+    }
+}
+
+void GameOfLifeClassTests::calculateNewGeneration_Spaceships_Glinder()
+{
+    // assign
+    const uint16_t mapSize = 5;
+    GameOfLife game(mapSize);
+
+    game.map()[1][2] = 1;
+    game.map()[2][0] = 1;
+    game.map()[2][2] = 1;
+    game.map()[3][1] = 1;
+    game.map()[3][2] = 1;
+
+    int resultArray[mapSize][mapSize] =
+    {
+        {0,0,0,0,0},
+        {0,1,0,0,0},
+        {0,0,1,1,0},
+        {0,1,1,0,0},
+        {0,0,0,0,0}
+    };
+
+    // act
+    game.calculateNewGeneration();
+
+    // assert
+    for (int i = 0; i < mapSize; ++i) {
+        for (int j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+        }
+    }
 }
 
 QTEST_APPLESS_MAIN(GameOfLifeClassTests)

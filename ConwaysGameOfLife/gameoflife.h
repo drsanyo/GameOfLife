@@ -25,8 +25,8 @@ public:
         createMapArrays();
     }
 
-    uint8_t countNeighbours(uint16_t width, uint16_t height);
-    uint8_t lieveOrDieRule(uint8_t neighboursCount, uint8_t previousValue);
+    uint8_t countNeighbors(uint16_t width, uint16_t height);
+    uint8_t lieveOrDieRule(uint8_t neighborsCount, uint8_t previousValue);
     void calculateNewGeneration();
     void initialiseGameMap();
 };

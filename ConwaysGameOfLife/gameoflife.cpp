@@ -24,7 +24,7 @@ void  GameOfLife::initialiseGameMap()
             _map[i][j] = std::rand() % ( 1 - 0 + 1 );
 }
 
-uint8_t GameOfLife::countNeighbours(uint16_t x, uint16_t y)
+uint8_t GameOfLife::countNeighbors(uint16_t x, uint16_t y)
 {
     if ((x >= _mapSize) || (y >= _mapSize))
         return 0;
@@ -46,7 +46,7 @@ void GameOfLife::calculateNewGeneration()
     for (uint16_t i = 0; i < _mapSize; ++i)
         for (uint16_t j = 0; j < _mapSize; ++j)
         {
-            uint8_t neighboursCount = countNeighbours(i, j);
+            uint8_t neighboursCount = countNeighbors(i, j);
             uint8_t result = lieveOrDieRule(neighboursCount, _map[i][j]);
             _mapNew[i][j] = result;
         }

@@ -7,17 +7,19 @@ class GameOfLifeClassTests : public QObject
     Q_OBJECT
 
 private slots:
-    void countNeighbours_ForEmptyMapShouldReturnZero();
-    void countNeighbours_ForAloneCellOnMapShouldReturnZero();
-    void countNeighbours_ArroundAloneCellShouldReturnOne();
-    void countNeighbours_EmptyCellInTopLeftCornerWithOneNeighbourShoulReturnOne();
-    void countNeighbours_EmptyCellInBottomRightCornerWithOneNeighbourShoulReturnOne();
-    void countNeighbours_OutOfMapBoundsShouldReturnZero();
+    void countNeighbors_ForEmptyMapShouldReturnZero();
+    void countNeighbors_ForAloneCellOnMapShouldReturnZero();
+    void countNeighbors_ArroundAloneCellShouldReturnOne();
+    void countNeighbors_EmptyCellInTopLeftCornerWithOneNeighborshoulReturnOne();
+    void countNeighbors_EmptyCellInBottomRightCornerWithOneNeighborshoulReturnOne();
+    void countNeighbors_OutOfMapBoundsShouldReturnZero();
+
+    //void lieveOrDieRule_CCellWithNoNeighborsDies();
 
 };
 
 
-void GameOfLifeClassTests::countNeighbours_ForEmptyMapShouldReturnZero()
+void GameOfLifeClassTests::countNeighbors_ForEmptyMapShouldReturnZero()
 {
     // assign
     uint16_t mapSize = 5;
@@ -26,15 +28,15 @@ void GameOfLifeClassTests::countNeighbours_ForEmptyMapShouldReturnZero()
     // act
     for (uint16_t i = 0; i < mapSize; ++i) {
         for (uint16_t j = 0; j < mapSize; ++j) {
-            uint8_t neighbours = game.countNeighbours(i, j);
+            uint8_t Neighbors = game.countNeighbors(i, j);
 
             // assert
-            QCOMPARE(neighbours, 0);
+            QCOMPARE(Neighbors, 0);
         }
     }
 }
 
-void GameOfLifeClassTests::countNeighbours_ForAloneCellOnMapShouldReturnZero()
+void GameOfLifeClassTests::countNeighbors_ForAloneCellOnMapShouldReturnZero()
 {
     // assign
     uint16_t mapSize = 5;
@@ -42,13 +44,13 @@ void GameOfLifeClassTests::countNeighbours_ForAloneCellOnMapShouldReturnZero()
     game.map()[2][2] = 1;
 
     // act
-    uint8_t neighbours = game.countNeighbours(2, 2);
+    uint8_t Neighbors = game.countNeighbors(2, 2);
 
     // assert
-    QCOMPARE(neighbours, 0);
+    QCOMPARE(Neighbors, 0);
 }
 
-void GameOfLifeClassTests::countNeighbours_ArroundAloneCellShouldReturnOne()
+void GameOfLifeClassTests::countNeighbors_ArroundAloneCellShouldReturnOne()
 {
     // assign
     uint16_t mapSize = 5;
@@ -61,17 +63,17 @@ void GameOfLifeClassTests::countNeighbours_ArroundAloneCellShouldReturnOne()
     // act
     for (uint16_t i = cellX-1; i <= cellX+1; ++i) {
         for (uint16_t j = cellY-1; j <= cellY-1; ++j) {
-            uint8_t neighbours = game.countNeighbours(i, j);
+            uint8_t Neighbors = game.countNeighbors(i, j);
 
             // assert
             if ((i != 2) && (j != 2)){
-                QCOMPARE(neighbours, 1);
+                QCOMPARE(Neighbors, 1);
             }
         }
     }
 }
 
-void GameOfLifeClassTests::countNeighbours_EmptyCellInTopLeftCornerWithOneNeighbourShoulReturnOne()
+void GameOfLifeClassTests::countNeighbors_EmptyCellInTopLeftCornerWithOneNeighborshoulReturnOne()
 {
     // assign
     uint16_t mapSize = 5;
@@ -86,13 +88,13 @@ void GameOfLifeClassTests::countNeighbours_EmptyCellInTopLeftCornerWithOneNeighb
     game.map()[neighbourX][neighbourY] = 1;
 
     // act
-    uint8_t neighbours = game.countNeighbours(testCellX, testCellY);
+    uint8_t Neighbors = game.countNeighbors(testCellX, testCellY);
 
     // assert
-    QCOMPARE(neighbours, 1);
+    QCOMPARE(Neighbors, 1);
 }
 
-void GameOfLifeClassTests::countNeighbours_EmptyCellInBottomRightCornerWithOneNeighbourShoulReturnOne()
+void GameOfLifeClassTests::countNeighbors_EmptyCellInBottomRightCornerWithOneNeighborshoulReturnOne()
 {
     // assign
     uint16_t mapSize = 5;
@@ -107,23 +109,23 @@ void GameOfLifeClassTests::countNeighbours_EmptyCellInBottomRightCornerWithOneNe
     game.map()[neighbourX][neighbourY] = 1;
 
     // act
-    uint8_t neighbours = game.countNeighbours(testCellX, testCellY);
+    uint8_t Neighbors = game.countNeighbors(testCellX, testCellY);
 
     // assert
-    QCOMPARE(neighbours, 1);
+    QCOMPARE(Neighbors, 1);
 }
 
-void GameOfLifeClassTests::countNeighbours_OutOfMapBoundsShouldReturnZero()
+void GameOfLifeClassTests::countNeighbors_OutOfMapBoundsShouldReturnZero()
 {
     // assign
     uint16_t mapSize = 5;
     GameOfLife game(mapSize);
 
     // act
-    uint8_t neighbours = game.countNeighbours(5, 5);
+    uint8_t Neighbors = game.countNeighbors(5, 5);
 
     // assert
-    QCOMPARE(neighbours, 0);
+    QCOMPARE(Neighbors, 0);
 }
 
 QTEST_APPLESS_MAIN(GameOfLifeClassTests)

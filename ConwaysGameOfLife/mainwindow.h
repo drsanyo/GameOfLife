@@ -19,6 +19,8 @@ public:
     virtual void paintEvent(QPaintEvent *event);
     QTimer *timer;
 
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 private slots:
     void on_btnStart_clicked();
 
@@ -34,10 +36,19 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
     GameOfLife gameOfLife;
     uint scale = 7;
-    void RedrawSpeedValue();
+    uint border = 20;
+
+    void RefreshSpeedValue();
     void StartTimerAtCurrentSpeed();
+    QPoint MousePositionToMapPosition(QPoint p);
+    void InvertMapCell(QPoint p);
 };
+
+
+
+
 
 #endif // MAINWINDOW_H

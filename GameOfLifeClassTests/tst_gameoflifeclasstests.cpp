@@ -14,8 +14,11 @@ private slots:
     void countNeighbors_EmptyCellInBottomRightCornerWithOneNeighborshoulReturnOne();
     void countNeighbors_OutOfMapBoundsShouldReturnZero();
 
-    //void lieveOrDieRule_CCellWithNoNeighborsDies();
-
+    void lieveOrDieRule_CellWithOneOrLessNeighborsShouldDie();
+    void lieveOrDieRule_CellWithMoreThanThreeNeighborsShouldDie();
+    void lieveOrDieRule_CellWithTwoOrThreeNeighborsShouldSurvive();
+    void lieveOrDieRule_EmptyCellWithThreeNeighborsShouldBorn();
+    void lieveOrDieRule_EmptyCellWithTwoNeighborsShouldBeEmpty();
 };
 
 
@@ -126,6 +129,75 @@ void GameOfLifeClassTests::countNeighbors_OutOfMapBoundsShouldReturnZero()
 
     // assert
     QCOMPARE(Neighbors, 0);
+}
+
+void GameOfLifeClassTests::lieveOrDieRule_CellWithOneOrLessNeighborsShouldDie()
+{
+    // assign
+    uint8_t previousCellState = 1;
+    GameOfLife game;
+
+    // act
+    uint8_t newCellState0Neighbors = game.lieveOrDieRule(0, previousCellState);
+    uint8_t newCellState1Neighbor = game.lieveOrDieRule(1, previousCellState);
+
+    // assert
+    QCOMPARE(newCellState1Neighbor , 0);
+    QCOMPARE(newCellState0Neighbors , 0);
+}
+
+void GameOfLifeClassTests::lieveOrDieRule_CellWithMoreThanThreeNeighborsShouldDie()
+{
+    // assign
+    uint8_t previousCellState = 1;
+    GameOfLife game;
+
+    // act
+    uint8_t newCellState = game.lieveOrDieRule(4, previousCellState);
+
+    // assert
+    QCOMPARE(newCellState , 0);
+}
+
+void GameOfLifeClassTests::lieveOrDieRule_CellWithTwoOrThreeNeighborsShouldSurvive()
+{
+    // assign
+    uint8_t previousCellState = 1;
+    GameOfLife game;
+
+    // act
+    uint8_t newCellState2Neighbors = game.lieveOrDieRule(2, previousCellState);
+    uint8_t newCellState3Neighbors = game.lieveOrDieRule(3, previousCellState);
+
+    // assert
+    QCOMPARE(newCellState2Neighbors , previousCellState);
+    QCOMPARE(newCellState3Neighbors , previousCellState);
+}
+
+void GameOfLifeClassTests::lieveOrDieRule_EmptyCellWithThreeNeighborsShouldBorn()
+{
+    // assign
+    uint8_t previousCellState = 0;
+    GameOfLife game;
+
+    // act
+    uint8_t newCellState = game.lieveOrDieRule(3, previousCellState);
+
+    // assert
+    QCOMPARE(newCellState , 1);
+}
+
+void GameOfLifeClassTests::lieveOrDieRule_EmptyCellWithTwoNeighborsShouldBeEmpty()
+{
+    // assign
+    uint8_t previousCellState = 0;
+    GameOfLife game;
+
+    // act
+    uint8_t newCellState = game.lieveOrDieRule(2, previousCellState);
+
+    // assert
+    QCOMPARE(newCellState, previousCellState);
 }
 
 QTEST_APPLESS_MAIN(GameOfLifeClassTests)

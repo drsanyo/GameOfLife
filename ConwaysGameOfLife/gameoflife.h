@@ -2,13 +2,17 @@
 #define GAMEOFLIFE_H
 #include <cstdint>
 #include <vector>
+#include <array>
+
 
 class GameOfLife
 {
 private:
     std::vector<std::vector<uint8_t>> _mapNew;
-
     uint16_t _mapSize = 100;    
+    std::array<std::array<uint8_t, 9>, 2> _rules = {{
+            {0, 0, 0, 1, 0, 0, 0, 0, 0},
+            {0, 0, 1, 1, 0, 0, 0, 0, 0}}};
 
     void createMapArrays();
     void deleteMapArrays();

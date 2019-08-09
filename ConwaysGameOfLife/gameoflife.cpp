@@ -53,18 +53,8 @@ void GameOfLife::calculateNewGeneration()
 }
 
 uint8_t GameOfLife::lieveOrDieRule(uint8_t neighboursCount, uint8_t previousValue)
-{
-    uint8_t result;
-    if ((neighboursCount <= 1) || (neighboursCount > 3)){
-        result = 0;
-    }
-    else if (neighboursCount == 3){
-        result = 1;
-    }
-    else {
-        result = previousValue;
-    }
-    return result;
+{       
+    return _rules[previousValue][neighboursCount];
 }
 
 void GameOfLife::createMapArrays()

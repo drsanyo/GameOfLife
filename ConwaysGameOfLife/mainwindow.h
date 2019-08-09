@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QPainter>
 #include <gameoflife.h>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsRectItem>
 
 namespace Ui {
 class MainWindow;

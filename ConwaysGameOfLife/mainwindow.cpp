@@ -4,7 +4,6 @@
 #include <QTimer>
 #include <QMouseEvent>
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -35,22 +34,23 @@ void MainWindow::on_btnStart_clicked()
     else {
         timer->stop();
         ui->btnStart->setText("Start");
-    }
+    }       
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
 {
+    uint16_t mapSize = gameOfLife.mapSize();
     QPainter painter(this);
-    for (uint i = 0; i < gameOfLife.mapSize(); ++i)
-        for (uint j = 0; j < gameOfLife.mapSize(); ++j){
-            if (gameOfLife.map()[i][j] == 1){
+    for (uint i = 0; i < mapSize; ++i)
+        for (uint j = 0; j < mapSize; ++j){
+            if (gameOfLife.Map[i][j] == 1){
                 painter.setBrush(Qt::SolidPattern);
             }
             else {
                 painter.setBrush(Qt::NoBrush);
             }            
             painter.drawRect(QRect(ui->gbControls->width() + int(border) + int(i) * int(scale), int(border)+int(j)*int(scale), int(scale), int(scale)));
-        }
+        }   
 }
 
 void MainWindow::on_sbScale_valueChanged(int arg1)
@@ -105,12 +105,12 @@ void MainWindow::StartTimerAtCurrentSpeed()
 
 void MainWindow::InvertMapCell(QPoint p)
 {
-    if (p.x()<gameOfLife.mapSize() && p.y()<gameOfLife.mapSize())
+    if ((p.x()<gameOfLife.mapSize() && p.y()<gameOfLife.mapSize()) && ((p.x() >= 0) && (p.y()>= 0)))
     {
-        if (gameOfLife.map()[p.x()][p.y()] == 1) {
-            gameOfLife.map()[p.x()][p.y()] = 0;
+        if (gameOfLife.Map[p.x()][p.y()] == 1) {
+            gameOfLife.Map[p.x()][p.y()] = 0;
         }else{
-            gameOfLife.map()[p.x()][p.y()] = 1;
+            gameOfLife.Map[p.x()][p.y()] = 1;
         }
     }
 }
@@ -122,7 +122,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         QMouseEvent* me = static_cast<QMouseEvent *>( event );
         const QPoint point = MousePositionToMapPosition(me->pos());
         InvertMapCell(point);
-        this->repaint();
+        this->repaint();       
     }
     return QMainWindow::eventFilter(watched, event);
 }

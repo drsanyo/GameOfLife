@@ -27,13 +27,11 @@ CONFIG += c++11 testcase
 SOURCES += \
         gameoflife.cpp \
         main.cpp \
-        mainwindow.cpp \
-        tests.cpp
+        mainwindow.cpp
 
 HEADERS += \
         gameoflife.h \
-        mainwindow.h \
-        tests.h
+        mainwindow.h
 
 FORMS += \
         mainwindow.ui

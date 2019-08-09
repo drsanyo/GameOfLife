@@ -1,5 +1,4 @@
 #include "gameoflife.h"
-#include <queue>
 
 GameOfLife::GameOfLife():GameOfLife(0)
 {
@@ -21,7 +20,7 @@ void  GameOfLife::initialiseGameMap()
 {
     for (uint16_t i = 0; i < _mapSize; ++i)
         for (uint16_t j = 0; j < _mapSize; ++j)
-            _map[i][j] = std::rand() % ( 1 - 0 + 1 );
+            Map[i][j] = std::rand() % ( 1 - 0 + 1 );
 }
 
 uint8_t GameOfLife::countNeighbors(uint16_t x, uint16_t y)
@@ -36,9 +35,9 @@ uint8_t GameOfLife::countNeighbors(uint16_t x, uint16_t y)
             // "wrap aroud" map to join top<->bottom and left<->right
             uint16_t col = (x + i + _mapSize) % _mapSize;
             uint16_t row = (y + j + _mapSize) % _mapSize;
-            sum += _map[col][row];
+            sum += Map[col][row];
         }
-    return sum-_map[x][y];
+    return sum-Map[x][y];
 }
 
 void GameOfLife::calculateNewGeneration()
@@ -47,10 +46,10 @@ void GameOfLife::calculateNewGeneration()
         for (uint16_t j = 0; j < _mapSize; ++j)
         {
             uint8_t neighboursCount = countNeighbors(i, j);
-            uint8_t result = lieveOrDieRule(neighboursCount, _map[i][j]);
+            uint8_t result = lieveOrDieRule(neighboursCount, Map[i][j]);
             _mapNew[i][j] = result;
         }
-    std::swap(_map, _mapNew);
+    std::swap(Map, _mapNew);
 }
 
 uint8_t GameOfLife::lieveOrDieRule(uint8_t neighboursCount, uint8_t previousValue)
@@ -70,31 +69,25 @@ uint8_t GameOfLife::lieveOrDieRule(uint8_t neighboursCount, uint8_t previousValu
 
 void GameOfLife::createMapArrays()
 {
-     _map = new uint8_t *[_mapSize];
-     _mapNew = new uint8_t *[_mapSize];
-
-    for(uint16_t i = 0; i < _mapSize; ++i){
-        _map[i] = new uint8_t [_mapSize];
-        for (uint16_t j = 0; j < _mapSize; ++j) {
-            _map[i][j] = 0;
+    for (int i = 0; i < _mapSize; i++) {
+        std::vector<uint8_t> row;
+        for (int j = 0; j < _mapSize; j++) {
+            row.push_back(0);
         }
+        Map.push_back(row);
     }
 
-    for(uint16_t  i = 0; i < _mapSize; ++i){
-        _mapNew[i] = new uint8_t [_mapSize];
-        for (uint16_t j = 0; j < _mapSize; ++j) {
-            _mapNew[i][j] = 0;
+    for (int i = 0; i < _mapSize; i++) {
+        std::vector<uint8_t> row;
+        for (int j = 0; j < _mapSize; j++) {
+            row.push_back(0);
         }
+        _mapNew.push_back(row);
     }
 }
 
 void GameOfLife::deleteMapArrays()
 {
-    for(uint16_t i = 0; i < _mapSize; ++i)
-        delete[] _map[i];
-    delete[]  _map;
-
-    for(uint16_t i = 0; i < _mapSize; ++i)
-        delete[] _mapNew[i];
-    delete[]  _mapNew;
+    Map.clear();
+    _mapNew.clear();
 }

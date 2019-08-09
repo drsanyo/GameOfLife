@@ -1,13 +1,14 @@
 #ifndef GAMEOFLIFE_H
 #define GAMEOFLIFE_H
 #include <cstdint>
+#include <vector>
 
 class GameOfLife
 {
 private:
-    uint8_t ** _mapNew;
-    uint8_t ** _map;
-    uint16_t _mapSize = 100;
+    std::vector<std::vector<uint8_t>> _mapNew;
+
+    uint16_t _mapSize = 100;    
 
     void createMapArrays();
     void deleteMapArrays();
@@ -16,9 +17,9 @@ public:
     GameOfLife();
     GameOfLife(uint16_t newMapSize);
     ~GameOfLife();
+    std::vector<std::vector<uint8_t>> Map;
 
-    uint8_t** map() const { return _map; }
-    const uint16_t& mapSize() const { return _mapSize; }
+    uint16_t mapSize() { return _mapSize; }
     void mapSize(const uint16_t& mapSize) {
         deleteMapArrays();
         _mapSize = mapSize;

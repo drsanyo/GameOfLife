@@ -50,7 +50,7 @@ void GameOfLifeClassTests::countNeighbors_ForAloneCellOnMapShouldReturnZero()
     // assign
     uint16_t mapSize = 5;
     GameOfLife game(mapSize);
-    game.map()[2][2] = 1;
+    game.Map[2][2] = 1;
 
     // act
     uint8_t Neighbors = game.countNeighbors(2, 2);
@@ -67,7 +67,7 @@ void GameOfLifeClassTests::countNeighbors_ArroundAloneCellShouldReturnOne()
     uint16_t cellY = 2;
 
     GameOfLife game(mapSize);
-    game.map()[cellY][cellX] = 1;
+    game.Map[cellY][cellX] = 1;
 
     // act
     for (uint16_t i = cellX-1; i <= cellX+1; ++i) {
@@ -94,7 +94,7 @@ void GameOfLifeClassTests::countNeighbors_EmptyCellInTopLeftCornerWithOneNeighbo
     uint16_t neighbourY = 0;
 
     GameOfLife game(mapSize);
-    game.map()[neighbourX][neighbourY] = 1;
+    game.Map[neighbourX][neighbourY] = 1;
 
     // act
     uint8_t Neighbors = game.countNeighbors(testCellX, testCellY);
@@ -115,7 +115,7 @@ void GameOfLifeClassTests::countNeighbors_EmptyCellInBottomRightCornerWithOneNei
     uint16_t neighbourY = 0;
 
     GameOfLife game(mapSize);
-    game.map()[neighbourX][neighbourY] = 1;
+    game.Map[neighbourX][neighbourY] = 1;
 
     // act
     uint8_t Neighbors = game.countNeighbors(testCellX, testCellY);
@@ -211,10 +211,10 @@ void GameOfLifeClassTests::calculateNewGeneration_StillLifes_Block()
     // assign
     const uint16_t mapSize = 4;
     GameOfLife game(mapSize);
-    game.map()[1][1] = 1;
-    game.map()[1][2] = 1;
-    game.map()[2][1] = 1;
-    game.map()[2][2] = 1;
+    game.Map[1][1] = 1;
+    game.Map[1][2] = 1;
+    game.Map[2][1] = 1;
+    game.Map[2][2] = 1;
 
     int resultArray[mapSize][mapSize] =
     {
@@ -228,9 +228,9 @@ void GameOfLifeClassTests::calculateNewGeneration_StillLifes_Block()
     game.calculateNewGeneration();
 
     // assert
-    for (int i = 0; i < mapSize; ++i) {
-        for (int j = 0; j < mapSize; ++j) {
-            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+    for (uint8_t i = 0; i < mapSize; ++i) {
+        for (uint8_t j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.Map[i][j], resultArray[i][j]);
         }
     }
 }
@@ -240,10 +240,10 @@ void GameOfLifeClassTests::calculateNewGeneration_StillLifes_Tub()
     // assign
     const uint16_t mapSize = 5;
     GameOfLife game(mapSize);
-    game.map()[2][1] = 1;
-    game.map()[2][3] = 1;
-    game.map()[1][2] = 1;
-    game.map()[3][2] = 1;
+    game.Map[2][1] = 1;
+    game.Map[2][3] = 1;
+    game.Map[1][2] = 1;
+    game.Map[3][2] = 1;
 
     int resultArray[mapSize][mapSize] =
     {
@@ -258,9 +258,9 @@ void GameOfLifeClassTests::calculateNewGeneration_StillLifes_Tub()
     game.calculateNewGeneration();
 
     // assert
-    for (int i = 0; i < mapSize; ++i) {
-        for (int j = 0; j < mapSize; ++j) {
-            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+    for (uint8_t i = 0; i < mapSize; ++i) {
+        for (uint8_t j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.Map[i][j], resultArray[i][j]);
         }
     }
 }
@@ -270,9 +270,9 @@ void GameOfLifeClassTests::calculateNewGeneration_Oscillators_Blinker()
     // assign
     const uint16_t mapSize = 5;
     GameOfLife game(mapSize);
-    game.map()[2][1] = 1;
-    game.map()[2][2] = 1;
-    game.map()[2][3] = 1;
+    game.Map[2][1] = 1;
+    game.Map[2][2] = 1;
+    game.Map[2][3] = 1;
 
     int resultArray[mapSize][mapSize] =
     {
@@ -287,9 +287,9 @@ void GameOfLifeClassTests::calculateNewGeneration_Oscillators_Blinker()
     game.calculateNewGeneration();
 
     // assert
-    for (int i = 0; i < mapSize; ++i) {
-        for (int j = 0; j < mapSize; ++j) {
-            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+    for (uint8_t i = 0; i < mapSize; ++i) {
+        for (uint8_t j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.Map[i][j], resultArray[i][j]);
         }
     }
 }
@@ -300,15 +300,15 @@ void GameOfLifeClassTests::calculateNewGeneration_Oscillators_Beacon()
     const uint16_t mapSize = 6;
     GameOfLife game(mapSize);
 
-    game.map()[1][4] = 1;
-    game.map()[1][3] = 1;
-    game.map()[2][4] = 1;
-    game.map()[2][3] = 1;
+    game.Map[1][4] = 1;
+    game.Map[1][3] = 1;
+    game.Map[2][4] = 1;
+    game.Map[2][3] = 1;
 
-    game.map()[3][2] = 1;
-    game.map()[3][1] = 1;
-    game.map()[4][2] = 1;
-    game.map()[4][1] = 1;
+    game.Map[3][2] = 1;
+    game.Map[3][1] = 1;
+    game.Map[4][2] = 1;
+    game.Map[4][1] = 1;
 
     int resultArray[mapSize][mapSize] =
     {
@@ -324,9 +324,9 @@ void GameOfLifeClassTests::calculateNewGeneration_Oscillators_Beacon()
     game.calculateNewGeneration();
 
     // assert
-    for (int i = 0; i < mapSize; ++i) {
-        for (int j = 0; j < mapSize; ++j) {
-            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+    for (uint8_t i = 0; i < mapSize; ++i) {
+        for (uint8_t j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.Map[i][j], resultArray[i][j]);
         }
     }
 }
@@ -337,11 +337,11 @@ void GameOfLifeClassTests::calculateNewGeneration_Spaceships_Glinder()
     const uint16_t mapSize = 5;
     GameOfLife game(mapSize);
 
-    game.map()[1][2] = 1;
-    game.map()[2][0] = 1;
-    game.map()[2][2] = 1;
-    game.map()[3][1] = 1;
-    game.map()[3][2] = 1;
+    game.Map[1][2] = 1;
+    game.Map[2][0] = 1;
+    game.Map[2][2] = 1;
+    game.Map[3][1] = 1;
+    game.Map[3][2] = 1;
 
     int resultArray[mapSize][mapSize] =
     {
@@ -356,9 +356,9 @@ void GameOfLifeClassTests::calculateNewGeneration_Spaceships_Glinder()
     game.calculateNewGeneration();
 
     // assert
-    for (int i = 0; i < mapSize; ++i) {
-        for (int j = 0; j < mapSize; ++j) {
-            QCOMPARE(game.map()[i][j], resultArray[i][j]);
+    for (uint8_t i = 0; i < mapSize; ++i) {
+        for (uint8_t j = 0; j < mapSize; ++j) {
+            QCOMPARE(game.Map[i][j], resultArray[i][j]);
         }
     }
 }

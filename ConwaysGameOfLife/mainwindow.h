@@ -39,6 +39,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QThread calculationThread;
 
     GameOfLife gameOfLife;
     uint scale = 7;

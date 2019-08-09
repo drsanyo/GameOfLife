@@ -81,3 +81,9 @@ void GameOfLife::deleteMapArrays()
     Map.clear();
     _mapNew.clear();
 }
+
+void GameOfLife::ConnectCalculationsToThread(QThread &thread)
+{
+    connect(&thread, SIGNAL(started()), this, SLOT(calculateNewGeneration()));
+}
+

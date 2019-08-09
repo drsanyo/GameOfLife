@@ -3,6 +3,7 @@
 #include <string>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(OnTimerEvent()));
 
-    gameOfLife.mapSize(uint16_t(ui->sbMapSize->value()));    
+    gameOfLife.mapSize(uint16_t(ui->sbMapSize->value()));
+    gameOfLife.ConnectCalculationsToThread(calculationThread);
+    gameOfLife.moveToThread(&calculationThread);
 
     RefreshSpeedValue();
     scale = uint(ui->sbScale->value());
@@ -22,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    calculationThread.wait();
+    delete ui;    
 }
 
 void MainWindow::on_btnStart_clicked()
@@ -61,7 +65,8 @@ void MainWindow::on_sbScale_valueChanged(int arg1)
 
 void MainWindow::OnTimerEvent()
 {
-    gameOfLife.calculateNewGeneration();
+    calculationThread.start();
+    calculationThread.quit();
     this->repaint();
 }
 

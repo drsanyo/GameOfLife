@@ -1,12 +1,15 @@
 #ifndef GAMEOFLIFE_H
 #define GAMEOFLIFE_H
+#include <QObject>
+#include <QThread>
 #include <cstdint>
 #include <vector>
 #include <array>
 
 
-class GameOfLife
+class GameOfLife:public QObject
 {
+    Q_OBJECT
 private:
     std::vector<std::vector<uint8_t>> _mapNew;
     uint16_t _mapSize = 100;    
@@ -32,8 +35,13 @@ public:
 
     uint8_t countNeighbors(uint16_t width, uint16_t height);
     uint8_t lieveOrDieRule(uint8_t neighborsCount, uint8_t previousValue);
-    void calculateNewGeneration();
+
     void initialiseGameMap();
+
+    void ConnectCalculationsToThread(QThread &thread);
+
+public slots:
+    void calculateNewGeneration();
 };
 
 #endif // GAMEOFLIFE_H

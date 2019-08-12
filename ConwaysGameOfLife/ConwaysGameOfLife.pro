@@ -27,14 +27,17 @@ CONFIG += c++11 testcase
 SOURCES += \
         gameoflife.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        selftesting.cpp
 
 HEADERS += \
         gameoflife.h \
-        mainwindow.h
+        mainwindow.h \
+        selftesting.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        selftesting.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

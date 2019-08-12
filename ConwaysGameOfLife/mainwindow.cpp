@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "selftesting.h"
 #include <string>
 #include <QTimer>
 #include <QMouseEvent>
@@ -38,7 +39,7 @@ void MainWindow::on_btnStart_clicked()
     else {
         timer->stop();
         ui->btnStart->setText("Start");
-    }       
+    }
 }
 
 void MainWindow::paintEvent(QPaintEvent *)
@@ -53,7 +54,11 @@ void MainWindow::paintEvent(QPaintEvent *)
             else {
                 painter.setBrush(Qt::NoBrush);
             }            
-            painter.drawRect(QRect(ui->gbControls->width() + int(border) + int(i) * int(scale), int(border)+int(j)*int(scale), int(scale), int(scale)));
+            painter.drawRect(QRect(
+                                 ui->gbControls->width() + int(border) + int(i) * int(scale),
+                                 ui->menuBar->height() + int(border)+int(j)*int(scale),
+                                 int(scale),
+                                 int(scale)));
         }   
 }
 
@@ -136,7 +141,14 @@ QPoint MainWindow::MousePositionToMapPosition(QPoint p)
 {
     const QPoint result(
         (p.x() - ui->gbControls->width() - int(border)) / int(scale),
-        (p.y() - int(border)) / int(scale));
+        (p.y() - ui->menuBar->height() - int(border)) / int(scale));
     return result;
 }
 
+
+void MainWindow::on_actionSelf_Testing_triggered()
+{
+    SelfTesting selfTetsingWindow;
+    selfTetsingWindow.setModal(true);
+    selfTetsingWindow.exec();
+}

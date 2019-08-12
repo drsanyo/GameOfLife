@@ -37,6 +37,8 @@ private slots:
 
     void on_btnRecreateMap_clicked();
 
+    void on_actionSelf_Testing_triggered();
+
 private:
     Ui::MainWindow *ui;
     QThread calculationThread;

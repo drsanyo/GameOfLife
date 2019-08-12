@@ -87,7 +87,7 @@ void MainWindow::on_sbMapSize_valueChanged(int arg1)
     this->repaint();
 }
 
-void MainWindow::on_hsSpeed_valueChanged(int value)
+void MainWindow::on_hsSpeed_valueChanged(int *)
 {
     bool timerOldState= timer->isActive();
     timer->stop();
@@ -117,10 +117,10 @@ void MainWindow::InvertMapCell(QPoint p)
 {
     if ((p.x()<gameOfLife.mapSize() && p.y()<gameOfLife.mapSize()) && ((p.x() >= 0) && (p.y()>= 0)))
     {
-        if (gameOfLife.Map[p.x()][p.y()] == 1) {
-            gameOfLife.Map[p.x()][p.y()] = 0;
+        if (gameOfLife.Map[uint8_t(p.x())][uint8_t(p.y())] == 1) {
+            gameOfLife.Map[uint8_t(p.x())][uint8_t(p.y())] = 0;
         }else{
-            gameOfLife.Map[p.x()][p.y()] = 1;
+            gameOfLife.Map[uint8_t(p.x())][uint8_t(p.y())] = 1;
         }
     }
 }

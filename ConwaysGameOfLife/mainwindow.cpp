@@ -87,7 +87,7 @@ void MainWindow::on_sbMapSize_valueChanged(int arg1)
     this->repaint();
 }
 
-void MainWindow::on_hsSpeed_valueChanged(int *)
+void MainWindow::on_hsSpeed_valueChanged(int value)
 {
     bool timerOldState= timer->isActive();
     timer->stop();
